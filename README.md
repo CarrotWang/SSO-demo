@@ -46,7 +46,7 @@
   + 创建最常见的package：bean、controller、service、mapper、util等
   
   ## 4. Mybatis在Spring Boot中的使用
-  + resources下创建application.properties文件，并配置数据源基本信息
+  + resources下创建application.properties文件，并配置数据源基本信息(所有配置信息都在这里)
   (创建数据库时记得编码设置为utf8-mb4)
 ```
   spring.datasource.url=jdbc:mysql://127.0.0.1:3306/sso
@@ -75,7 +75,18 @@
   + 用jquery和bootstrap写了一页面用于调试、展示
   
   ## 6. 业务逻辑实现思路
-  
+  ### 1.实现session
+   + 连接redis
+    ```
+        <!-- 操作redis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+    ```
+    新增redis配置，创建redis连接池（JedisClient类配置），在UserService处使用，
+    也就是登录的时候，设置key-value，key为用户id，value暂且设置无意义字符串，后续使用。
 
 
 
