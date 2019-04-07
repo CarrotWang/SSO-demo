@@ -60,15 +60,19 @@
   我偷懒，不想去生存mapper文件，全是在mapper接口中直接写的sql。
   
   ## 5. 实现最简单的登录逻辑
-  数据库表创建语句
+  + 数据库表创建语句
   ```
   CREATE TABLE `user` (
-    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
     `name` varchar(120) NOT NULL DEFAULT '' COMMENT 'name',
     `passwd` varchar(120) NOT NULL DEFAULT '' COMMENT 'password',
     PRIMARY KEY (`id`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
   ```
+  + 创建dto包，用于存放传送数据的对象（将业务逻辑和bean解耦），创建LoginRequest类，用于发送登录请求
+  + 编写注册接口
+  + 编写登录接口
+  + 用jquery和bootstrap写了一页面用于调试、展示
   
   ## 6. 业务逻辑实现思路
   
