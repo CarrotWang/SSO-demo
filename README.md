@@ -77,17 +77,21 @@
   ## 6. 业务逻辑实现思路
   ### 1.实现session
    + 连接redis
-    ```
+   
+ ```
         <!-- 操作redis -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>2.9.0</version>
         </dependency>
-    ```
-    新增redis配置，创建redis连接池（JedisClient类配置），在UserService处使用，
-    也就是登录的时候，设置key-value，key为用户id，value暂且设置无意义字符串，后续使用。
+ ```
+    
+ 新增redis配置，创建redis连接池（JedisClient类配置），在UserService处使用，
+ 也就是密码验证通过的时候，设置key-value，key为用户id，value暂且设置无意义字符串，后续使用。
 
-
+```
+jedisPool.getResource().setex("session_"+u.getId() , LOGIN_TIMEOUT_SECOND,"futrue use" );
+```
 
   
