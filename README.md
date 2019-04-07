@@ -94,4 +94,12 @@
 jedisPool.getResource().setex("session_"+u.getId() , LOGIN_TIMEOUT_SECOND,"futrue use" );
 ```
 
+ ### 2.实现filter拦截
+ 
+ ### 3.实现权限存储
+
+ ### 4.实现权限管理 
+
+
+
   
