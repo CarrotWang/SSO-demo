@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SSO demo</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+    </script>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+<div class="panel-body" style="width:250px;height:200px;text-align:center;margin:auto;margin-top:270px">
+    <div style="margin-bottom:10px">
+        <div style="display:inline">
+            <label for="name">登录名:</label>
+        </div>
+        <div style="display:inline">
+            <input type="text" id="name"/>
+        </div>
+    </div>
+    <div style="margin-bottom:10px">
+        <div style="display:inline">
+            <label for="passwd">密&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
+        </div>
+        <div style="display:inline">
+            <input type="password" id="passwd"/>
+        </div>
+    </div>
+
+
+    <button id="login">登录</button>
+</div>
+
+
+<script>
+        $("#login").click(function(){
+            var name = $("#name").val();
+            var passwd = $("#passwd").val();
+            var user={name:name,passwd:passwd};
+            $.ajax({
+                url:"/login",
+                type:"POST",
+                data:JSON.stringify(user),
+                contentType:"application/json",
+                success:function(data){
+                    if(data.code==0){
+                        alert("登录成功");
+                    }else{
+                        alert("登录失败");
+                    }
+                }
+            });
+        });
+</script>
+</body>
+</html>
