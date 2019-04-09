@@ -122,6 +122,8 @@ jedisPool.getResource().setex("session_"+u.getId() , LOGIN_TIMEOUT_SECOND,"Sessi
   ### 2.简化版
   
   ### 3.实现
+  由于前期考虑不周，这里修改原来的单模块项目为多模块项目，包含两个模块，server和client。
+  server模块端即CAS服务器，client模块单独打包，其他服务需要单点服务时，依赖此模块，即可实现SSO功能。
   
 
 
