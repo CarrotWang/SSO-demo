@@ -108,7 +108,13 @@ jedisPool.getResource().setex("session_"+u.getId() , LOGIN_TIMEOUT_SECOND,"Sessi
       2. 通过cookie检查用户是否登录，登录则更新session存活时间，接着继续处理；
          未登录，跳转到登录页面
       
-
+  ## 7.单点登录原理
+  ### 1.原理（CAS，Central Authentication Service）
+      ![](http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/56385654.jpg)
+  ### 2.简化版
+  
+  ### 3.实现
+  
 
 
   
