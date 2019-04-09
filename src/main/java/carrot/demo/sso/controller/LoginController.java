@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+
 @RestController
 public class LoginController {
 
@@ -18,8 +21,8 @@ public class LoginController {
     UserService userService;
 
     @RequestMapping(value = "login",method = RequestMethod.POST)
-    public Response login(@RequestBody LoginRequest loginRequest){
-        Response  r = userService.login(loginRequest);
+    public Response login(HttpServletResponse response, @RequestBody LoginRequest loginRequest) throws UnsupportedEncodingException {
+        Response  r = userService.login(loginRequest,response);
         return r;
     }
 
