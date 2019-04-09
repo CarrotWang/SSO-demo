@@ -74,7 +74,7 @@
   + 编写登录接口
   + 用jquery和bootstrap写了一页面用于调试、展示
   
-  ## 6. 业务逻辑实现思路
+  ## 6. 登录业务逻辑实现思路
   ### 1.实现session
    + 连接redis
    
@@ -91,14 +91,23 @@
  也就是密码验证通过的时候，设置key-value，key为用户id，value暂且设置无意义字符串，后续使用。
 
 ```
-jedisPool.getResource().setex("session_"+u.getId() , LOGIN_TIMEOUT_SECOND,"futrue use" );
+jedisPool.getResource().setex("session_"+u.getId() , LOGIN_TIMEOUT_SECOND,"Session Object Json String" );
 ```
 
  ### 2.实现filter拦截
- 
- ### 3.实现权限存储
-
- ### 4.实现权限管理 
+ #### 1.登录时激活cookie
+      Cookie cookie = new Cookie(ConstantUtil.USER_SESSION_KEY, URLEncoder.encode(Long.toString(u.getId()), "UTF-8"));
+      cookie.setMaxAge(LOGIN_TIMEOUT_SECOND);
+      cookie.setPath("/");
+      response.addCookie(cookie);
+ #### 2.配置filter
+      Main类上加注解@ServletComponentScan，激活servlet配置
+      filter实现类上加注解@WebFilter
+ #### 3.实现filter逻辑
+      1. 过滤不拦截的资源
+      2. 通过cookie检查用户是否登录，登录则更新session存活时间，接着继续处理；
+         未登录，跳转到登录页面
+      
 
 
 
