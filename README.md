@@ -110,7 +110,15 @@ jedisPool.getResource().setex("session_"+u.getId() , LOGIN_TIMEOUT_SECOND,"Sessi
       
   ## 7.单点登录原理
   ### 1.原理（CAS，Central Authentication Service）
-      ![](http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/56385654.jpg)
+  ![](https://github.com/CarrotWang/SSO-demo/blob/master/img/cas.jpg)
+  
+      1.登录普通网站A
+      2.重定向到CAS登录页面
+      3.用户输入用户名、密码，CAS服务进行验证
+      4.验证通过，CAS让客户端重定向到网站A，并传入service名以及token
+      5.服务A得到service和token后，请求CAS服务验证真实性
+      6.CAS确定服务A请求的真实性后，返回该用户信息
+  
   ### 2.简化版
   
   ### 3.实现
