@@ -1,5 +1,7 @@
 package carrot.demo.sso.dto.response;
 
+import javafx.beans.binding.ObjectExpression;
+
 public class Response {
     private int code;
 
@@ -35,6 +37,14 @@ public class Response {
         Response resp=new Response();
         resp.setCode(0);
         resp.setMsg(msg);
+        return  resp;
+    }
+
+    public static Response success(String msg, String data){
+        Response resp=new Response();
+        resp.setCode(0);
+        resp.setMsg(msg);
+        resp.setData(data);
         return  resp;
     }
 

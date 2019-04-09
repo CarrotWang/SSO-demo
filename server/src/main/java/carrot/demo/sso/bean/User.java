@@ -5,6 +5,8 @@ public class User {
 
     private String name;
 
+    private String datas;
+
     private String passwd;
 
     public long getId() {
@@ -21,6 +23,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDatas() {
+        return datas;
+    }
+
+    public void setDatas(String datas) {
+        this.datas = datas;
     }
 
     public String getPasswd() {

@@ -6,12 +6,10 @@ import carrot.demo.sso.dto.request.RegisterRequest;
 import carrot.demo.sso.dto.response.Response;
 import carrot.demo.sso.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 @RestController
@@ -21,8 +19,9 @@ public class LoginController {
     UserService userService;
 
     @RequestMapping(value = "login",method = RequestMethod.POST)
-    public Response login(HttpServletResponse response, @RequestBody LoginRequest loginRequest) throws UnsupportedEncodingException {
-        Response  r = userService.login(loginRequest,response);
+    public Response login(HttpServletResponse response, @RequestBody LoginRequest loginRequest,
+                          @RequestParam("srcUrl") String srcUrl, @RequestParam("app") String app) throws Exception {
+        Response  r = userService.login(loginRequest,response,srcUrl,app);
         return r;
     }
 

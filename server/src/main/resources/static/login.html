@@ -39,18 +39,31 @@
 
 
 <script>
+        function getQueryVariable(variable)
+        {
+               var query = window.location.search.substring(1);
+               var vars = query.split("&");
+               for (var i=0;i<vars.length;i++) {
+                       var pair = vars[i].split("=");
+                       if(pair[0] == variable){return pair[1];}
+               }
+               return(false);
+        }
         $("#login").click(function(){
             var name = $("#name").val();
             var passwd = $("#passwd").val();
             var user={name:name,passwd:passwd};
             $.ajax({
-                url:"/login",
+                url:"/login"+"?srcUrl="+getQueryVariable("srcUrl")+"&app="+getQueryVariable("app"),
                 type:"POST",
                 data:JSON.stringify(user),
                 contentType:"application/json",
                 success:function(data){
                     if(data.code==0){
-                        alert("登录成功");
+                        //alert("登录成功");
+                        alert(data.datas)
+                        //window.location.href = 'http://www.mahaixiang.cn/';
+                        //window.location.href=data.srcUrl+"?token="+data.datas;
                     }else{
                         alert("登录失败");
                     }
