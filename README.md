@@ -157,4 +157,4 @@ jedisPool.getResource().setex("session_"+u.getId() , LOGIN_TIMEOUT_SECOND,"Sessi
         logout这里有一个bug，其实懂了原理这里很好修改，算是一个作业。
   ### 4.可以继续优化的地方
         可以注意到这个项目分了三个package，common包就是为了方便其他服务使用；
-        我们学了
+        我们学了Spring Boot，它能够帮助自动加载需要的组件，我们可以把client包做成一个可配置的starter供介入CAS服务的客户使用。
