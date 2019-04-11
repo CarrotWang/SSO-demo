@@ -1,7 +1,5 @@
 package carrot.demo.sso.dto.response;
 
-import javafx.beans.binding.ObjectExpression;
-
 public class Response {
     private int code;
 

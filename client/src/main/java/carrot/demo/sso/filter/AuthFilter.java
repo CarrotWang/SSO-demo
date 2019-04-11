@@ -3,6 +3,7 @@ package carrot.demo.sso.filter;
 import carrot.demo.sso.util.ConstantUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.Base64Utils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -17,22 +18,24 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static carrot.demo.sso.service.UserService.LOGIN_TIMEOUT_SECOND;
-
-/*
-    关于filter和interceptor
-    https://www.cnblogs.com/rayallenbj/p/8484276.html
-*/
-@WebFilter(urlPatterns = "/*")
-public class LoginFilter implements Filter {
-    @Autowired
-    JedisPool jedisPool;
-
-    @Value(value = "${loginUrl}")
-    public String loginUrl;
+@WebFilter
+public class AuthFilter implements Filter {
 
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(new HashSet<String>(
             Arrays.asList("/login", "/logout",  "/login.html")));
+
+
+    @Autowired
+    private JedisPool jedisPool;
+
+    @Value(value = "${sso.loginUrl}")
+    private String loginUrl;
+
+    @Value(value = "${sso.callbackUrl}")
+    private String callbackUrl;
+
+    @Value(value = "${app.name}")
+    private String appName;
 
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -56,10 +59,12 @@ public class LoginFilter implements Filter {
                     Jedis jedis = jedisPool.getResource();
                     String session = jedis.get(cookie.getValue());
                     if(session==null){
-                        session="{}";
+                        isLogin=false;
+                    }else{
+                        jedis.setex(cookie.getValue(), ConstantUtil.LOGIN_TIMEOUT_SECOND,session);
+                        isLogin=true;
                     }
-                    jedis.setex(cookie.getValue(),LOGIN_TIMEOUT_SECOND,session);
-                    isLogin=true;
+                    jedis.close();
                 }
             }
         }
@@ -67,13 +72,14 @@ public class LoginFilter implements Filter {
             chain.doFilter(request, response);
             return;
         }else{
-            httpResp.sendRedirect(loginUrl);
+            StringBuffer returnUrl = httpReq.getRequestURL();
+            byte[] returnUrlBytes = new String(returnUrl).getBytes("utf-8");
+            String redirectUrl=loginUrl+"?callbackUrl="+callbackUrl+"&returnUrl="+ returnUrl.toString() +"&app="+appName;
+            httpResp.sendRedirect(redirectUrl);
         }
     }
-
 
     public void destroy() {
 
     }
-
 }

@@ -54,16 +54,18 @@
             var passwd = $("#passwd").val();
             var user={name:name,passwd:passwd};
             $.ajax({
-                url:"/login"+"?srcUrl="+getQueryVariable("srcUrl")+"&app="+getQueryVariable("app"),
+                url:"/login"+"?callbackUrl="+getQueryVariable("callbackUrl")+"&app="+getQueryVariable("app")+
+                "&returnUrl="+getQueryVariable("returnUrl"),
                 type:"POST",
                 data:JSON.stringify(user),
                 contentType:"application/json",
                 success:function(data){
                     if(data.code==0){
                         //alert("登录成功");
-                        alert(data.datas)
+                        var obj = JSON.parse(data.data);
+                        console.log(obj.datas);
                         //window.location.href = 'http://www.mahaixiang.cn/';
-                        //window.location.href=data.srcUrl+"?token="+data.datas;
+                        window.location.href=obj.callbackUrl+"?token="+obj.datas+"&returnUrl="+obj.returnUrl;
                     }else{
                         alert("登录失败");
                     }

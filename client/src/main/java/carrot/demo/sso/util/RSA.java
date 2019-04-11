@@ -3,7 +3,11 @@ package carrot.demo.sso.util;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import javax.crypto.Cipher;
-import java.security.*;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -17,8 +21,7 @@ public class RSA {
         //生成公钥和私钥
 //        genKeyPair();
         Map<Integer, String> keyMap = new HashMap<Integer, String>();
-        keyMap.put(0,"MIGfMA0G" +
-                "CSqGSIb3DQEBAQUAA4GNADCBiQKBgQCC/Qiq3Dw5pZGJk7sYn94PrqfD3kIDWs3ksX4Dvs30uSAFTGSEXHNMpqNidb/WXB98KB5Z7Q3v/1juYgIUiNDV7Tx/dgDW4nWIsqdDQnt8yAxNGX59aWt4AxEEcT6r5N6SiwmpofgnhuN6RuHjXVkeNsoU5kIQ+aRFfzKmQFKGawIDAQAB");
+        keyMap.put(0,"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCC/Qiq3Dw5pZGJk7sYn94PrqfD3kIDWs3ksX4Dvs30uSAFTGSEXHNMpqNidb/WXB98KB5Z7Q3v/1juYgIUiNDV7Tx/dgDW4nWIsqdDQnt8yAxNGX59aWt4AxEEcT6r5N6SiwmpofgnhuN6RuHjXVkeNsoU5kIQ+aRFfzKmQFKGawIDAQAB");
         keyMap.put(1,"MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAIL9CKrcPDmlkYmTuxif3g+up8PeQgNazeSxfgO+zfS5IAVMZIRcc0ymo2J1v9Zc" +
                         "H3woHlntDe//WO5iAhSI0NXtPH92ANbidYiyp0NCe3zIDE0Zfn1pa3gDEQRxPqvk3pKLCamh+CeG43pG4eNdWR42yhTmQhD5pEV/MqZAUoZrA" +
                         "gMBAAECgYA8tNJghUMwIEir7xiF2AmNUQ+VWhtT/LBxbcUOLU68PVPWwMnRAhu5iX0tM48d5IH/A4TVfmS4NqpbiHaYV7QY11sb39Jeez4/ZJ" +
@@ -95,6 +98,14 @@ public class RSA {
      */
     public static String decrypt(String str, String privateKey) throws Exception{
         //64位解码加密后的字符串
+        privateKey="MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAIL9CKrcPDmlkYmTuxif3g+up8PeQgNazeSxfgO+zfS5IAVMZIRcc0ymo2J1v9Zc" +
+                "H3woHlntDe//WO5iAhSI0NXtPH92ANbidYiyp0NCe3zIDE0Zfn1pa3gDEQRxPqvk3pKLCamh+CeG43pG4eNdWR42yhTmQhD5pEV/MqZAUoZrA" +
+                "gMBAAECgYA8tNJghUMwIEir7xiF2AmNUQ+VWhtT/LBxbcUOLU68PVPWwMnRAhu5iX0tM48d5IH/A4TVfmS4NqpbiHaYV7QY11sb39Jeez4/ZJ" +
+                "gJ4ZC64CIcSQ+pS1h1jMIq3yjtNhPwg4mI03Sha0RuAW2EOo9VQFKVzSJMD1JisI9DFnCzWQJBALtdMs8HtvTZiH79HlEnIcAiKo9lgHYFtDl" +
+                "2RYhyTNMx/aZGUIv6/8hA48nTOJDNCfpS/qFutaSVEjBDPbMan+UCQQCy+PzXzljqsgTqKgShijGBMWUKBsM5QVzhtDycHf+mRsSwFZUJxaeF" +
+                "rSNY8e3DWvexDvwtLJ8tQY1rFkAFdAgPAkBzqx6x1vZpBF6S3xq3SOw6HB2gNy5uLilMDCrzCHVLMKKB4wjY0hTUgNLfhyl1o09UnaYa7SjwO" +
+                "SNobiqKBpbNAkAZRi42r65A3ojxJKPoyCI7k2UoaFITeNaMDS7uARKEQcQu9a1JZv9EUnIGcovYJbWK7InSO1XzRymYcNjzrDIjAkBy/uWt1q" +
+                "A3vxr5gCMuxrKZ/Rb5dYUsEmLenWPUl8yV7GAlghAXgmZVI/YyDoh4wkN+UV2WGNm0RDcAB1pZ5JJS";
         byte[] inputByte = Base64.decodeBase64(str.getBytes("UTF-8"));
         //base64编码的私钥
         byte[] decoded = Base64.decodeBase64(privateKey);
