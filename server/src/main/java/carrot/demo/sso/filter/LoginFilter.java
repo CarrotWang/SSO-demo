@@ -59,6 +59,7 @@ public class LoginFilter implements Filter {
                         session="{}";
                     }
                     jedis.setex(cookie.getValue(),LOGIN_TIMEOUT_SECOND,session);
+                    jedis.close();
                     isLogin=true;
                 }
             }

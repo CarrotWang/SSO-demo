@@ -24,7 +24,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "register",method = RequestMethod.POST)
-    public Response login(@RequestBody RegisterRequest registerRequest){
+    public Response register(@RequestBody RegisterRequest registerRequest){
         Response  r = userService.register(registerRequest);
         return r;
     }
